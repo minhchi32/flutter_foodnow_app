@@ -3,6 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_foodnow_app/homepage/homepage.dart';
+import 'package:flutter_foodnow_app/models/user.dart';
+import 'package:flutter_foodnow_app/models/utilities.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../signup/signuppage.dart';
 
 class SignInForm extends StatefulWidget {
@@ -12,7 +19,7 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _value = false;
+  bool _value = true;
 
   var prefs;
   final username = TextEditingController();
@@ -48,7 +55,7 @@ class _SignInFormState extends State<SignInForm> {
           children: [
             Container(
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,6 +81,9 @@ class _SignInFormState extends State<SignInForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextFormField(
+                      validator: (value) {
+                        return Utilities.validatePassword(value!);
+                      },
                       onSaved: (_value) {
                         setState(() {
                           username.text = _value!;
@@ -90,6 +100,9 @@ class _SignInFormState extends State<SignInForm> {
                     ),
                     TextFormField(
                       controller: password,
+                      validator: (value) {
+                        return Utilities.validatePassword(value!);
+                      },
                       keyboardType: TextInputType.number,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -100,17 +113,17 @@ class _SignInFormState extends State<SignInForm> {
                     SizedBox(
                       height: 5,
                     ),
-                    // Row(
-                    //   children: [
-                    //     Checkbox(value: _value?? : true, onChanged: (value)  {
-                    //       print(_value.toString());
-                    //       setState((){
-                    //         _value = value;
-                    //       });
-                    //     }),
-                    //     Text("Remember me", style: TextStyle(fontSize: 16, color: Colors.green),)
-                    //   ],
-                    // ),
+                    Row(
+                      children: [
+                        Checkbox(value: _value, onChanged: (value)  {
+                          print(_value.toString());
+                          setState((){
+                            _value = value!;
+                          });
+                        }),
+                        Text("Remember me", style: TextStyle(fontSize: 16, color: Colors.green),)
+                      ],
+                    ),
                     SizedBox(
                       height: 5,
                     ),
@@ -128,15 +141,14 @@ class _SignInFormState extends State<SignInForm> {
                           } else {
                             prefs.remove('check');
                           }
+                          Navigator.pushNamed(context, HomePage.routeName);
                         },
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.green)
-                            )
-                          )
-                        ),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(color: Colors.green)))),
                         child: Text(
                           "Continue",
                           style: TextStyle(
@@ -161,8 +173,8 @@ class _SignInFormState extends State<SignInForm> {
                             decoration: BoxDecoration(
                                 color: Color(0xFFF5F6F9),
                                 shape: BoxShape.circle),
-                            child:
-                                SvgPicture.asset("assets/icons/facebook-2.svg"),
+                            child: SvgPicture.asset(
+                                "./assets/icons/facebook-2.svg"),
                           ),
                           Container(
                             height: 40,
@@ -173,7 +185,7 @@ class _SignInFormState extends State<SignInForm> {
                                 color: Color(0xFFF5F6F9),
                                 shape: BoxShape.circle),
                             child: SvgPicture.asset(
-                                "assets/icons/google-icon.svg"),
+                                "./assets/icons/google-icon.svg"),
                           ),
                           Container(
                             height: 40,
@@ -182,7 +194,8 @@ class _SignInFormState extends State<SignInForm> {
                             decoration: BoxDecoration(
                                 color: Color(0xFFF5F6F9),
                                 shape: BoxShape.circle),
-                            child: SvgPicture.asset("assets/icons/twitter.svg"),
+                            child:
+                                SvgPicture.asset("./assets/icons/twitter.svg"),
                           )
                         ],
                       ),
@@ -201,6 +214,8 @@ class _SignInFormState extends State<SignInForm> {
                             onTap: () async {
                               final result = await Navigator.pushNamed(
                                   context, SignUpPage.routeName);
+                              User? user = result as User?;
+                              username.text = user!.username;
                             },
                             child: Text(
                               " Sign Up",

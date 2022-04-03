@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_foodnow_app/models/user.dart';
-import 'package:flutter_foodnow_app/models/utilities.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:quiver/strings.dart';
 
-class SignUpForm extends StatefulWidget {
+class AccountDetail extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  _AccountDetailState createState() => _AccountDetailState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
-  var email = TextEditingController();
-  final password = TextEditingController();
-  final conform = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-  var _passKey = GlobalKey<FormFieldState>();
-
+class _AccountDetailState extends State<AccountDetail> {
+  final email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -45,16 +34,13 @@ class _SignUpFormState extends State<SignUpForm> {
             SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.green)
-                            )
-                          )
-                        ),
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context, email.text);
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                color: Colors.green,
                 child: Text(
                   "Continue",
                   style: TextStyle(
@@ -78,7 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/facebook-2.svg"),
+                    child: SvgPicture.asset("assets/icons/facebook-2.svg"),
                   ),
                   Container(
                     height: 40,
@@ -87,7 +73,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/google-icon.svg"),
+                    child: SvgPicture.asset("assets/icons/google-icon.svg"),
                   ),
                   Container(
                     height: 40,
@@ -95,7 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/twitter.svg"),
+                    child: SvgPicture.asset("assets/icons/twitter.svg"),
                   )
                 ],
               ),
@@ -109,56 +95,37 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField emailTextFormField() {
     return TextFormField(
       controller: email,
-      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Enter your email ",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(Icons.email_outlined)),
-      validator: Utilities.validateEmail,
-      onSaved: (value) {
-        setState(() {
-          email.text = value!;
-        });
-      },
+    );
+  }
+
+  TextFormField conformTextFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Re-enter your password",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.lock_outline)),
     );
   }
 
   TextFormField passwordTextFormField() {
     return TextFormField(
-        key: _passKey,
-        controller: password,
-        obscureText: true,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: "Enter your password",
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixIcon: Icon(Icons.lock_outline)),
-        validator: (passwordKey) {
-          return Utilities.validatePassword(passwordKey!);
-        });
-  }
-
-  TextFormField conformTextFormField() {
-    return TextFormField(
-      controller: conform,
-      obscureText: true,
-      keyboardType: TextInputType.number,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: "Re-enter your password",
+          hintText: "Enter your password",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(Icons.lock_outline)),
-      validator: (conformPassword) {
-        var pass = _passKey.currentState?.value;
-        return Utilities.conformPassword(conformPassword!, pass);
-      },
-      onSaved: (value) {
-        setState(() {
-          conform.text = value!;
-        });
-      },
     );
   }
 }

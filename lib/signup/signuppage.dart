@@ -9,16 +9,21 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
-          color: Colors.white,
+          color: Colors.green,
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
         ),
         centerTitle: true,
-        title: Text("Sign Up", style: TextStyle(color: Colors.white),),),
+        title: Text(
+          "Sign Up",
+          style: TextStyle(color: Colors.green),
+        ),
+      ),
       body: Body(),
     );
   }
