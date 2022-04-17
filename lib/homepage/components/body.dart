@@ -30,6 +30,7 @@ class _BodyState extends State<Body> {
     ];
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: flag ? HomeHeader() : MenuHeader(),

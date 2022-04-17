@@ -115,13 +115,18 @@ class _SignInFormState extends State<SignInForm> {
                     ),
                     Row(
                       children: [
-                        Checkbox(value: _value, onChanged: (value)  {
-                          print(_value.toString());
-                          setState((){
-                            _value = value!;
-                          });
-                        }),
-                        Text("Remember me", style: TextStyle(fontSize: 16, color: Colors.green),)
+                        Checkbox(
+                            value: _value,
+                            onChanged: (value) {
+                              print(_value.toString());
+                              setState(() {
+                                _value = value!;
+                              });
+                            }),
+                        Text(
+                          "Remember me",
+                          style: TextStyle(fontSize: 16, color: Colors.green),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -132,14 +137,36 @@ class _SignInFormState extends State<SignInForm> {
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (_value) {
-                            // obtain shared preferences
-                            prefs = await SharedPreferences.getInstance();
-                            prefs.setString('username', username.text);
-                            prefs.setString('password', password.text);
-                            prefs.setBool('check', _value);
+                          if (prefs.containsKey('username')) {
+                            if (prefs.getString('username') != username.text ||
+                                prefs.getString('password') != password.text) {
+                              Fluttertoast.showToast(
+                                  msg:
+                                      // "Username: ${prefs.getString('username')} \nPassword: ${prefs.getString('password')}",
+                                      "Username or password incorrect",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Username or password is empty"),
+                              ));
+                              return;
+                            }
                           } else {
-                            prefs.remove('check');
+                            if (_value) {
+                              // obtain shared preferences
+                              prefs = await SharedPreferences.getInstance();
+                              prefs.setString('username', username.text);
+                              prefs.setString('password', password.text);
+                              prefs.setBool('check', _value);
+                            } else {
+                              prefs.remove('check');
+                            }
+                            Navigator.pushNamed(context, HomePage.routeName);
                           }
                           Navigator.pushNamed(context, HomePage.routeName);
                         },
@@ -216,6 +243,7 @@ class _SignInFormState extends State<SignInForm> {
                                   context, SignUpPage.routeName);
                               User? user = result as User?;
                               username.text = user!.username;
+                              password.text = user.password;
                             },
                             child: Text(
                               " Sign Up",

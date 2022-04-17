@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_foodnow_app/models/user.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quiver/strings.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -12,6 +14,7 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  var prefs;
   var email = TextEditingController();
   final password = TextEditingController();
   final conform = TextEditingController();
@@ -46,15 +49,20 @@ class _SignUpFormState extends State<SignUpForm> {
               height: 50,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    prefs = await SharedPreferences.getInstance();
+                    prefs.setString('username', email.text);
+                    prefs.setString('password', conform.text);
+                    Navigator.pop(context,
+                        User(username: email.text, password: conform.text));
+                  }
+                },
                 style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Colors.green)
-                            )
-                          )
-                        ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.green)))),
                 child: Text(
                   "Continue",
                   style: TextStyle(

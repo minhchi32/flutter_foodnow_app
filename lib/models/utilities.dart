@@ -52,7 +52,7 @@ class Utilities {
   }
 
   static String? conformPassword(String a, String b) {
-    if (equalsIgnoreCase(a, b)) return 'Conform password invalid';
+    if (!equalsIgnoreCase(a, b)) return 'Conform password invalid';
     return null;
   }
 }

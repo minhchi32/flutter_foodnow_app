@@ -19,6 +19,10 @@ class _AccountDetailState extends State<AccountDetail> {
             SizedBox(
               height: 30,
             ),
+            fullnameTextFormField(),
+            SizedBox(
+              height: 30,
+            ),
             emailTextFormField(),
             SizedBox(
               height: 30,
@@ -28,6 +32,10 @@ class _AccountDetailState extends State<AccountDetail> {
               height: 30,
             ),
             conformTextFormField(),
+            SizedBox(
+              height: 30,
+            ),
+            addressTextFormField(),
             SizedBox(
               height: 30,
             ),
@@ -98,8 +106,6 @@ class _AccountDetailState extends State<AccountDetail> {
       decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Enter your email ",
-          // If  you are using latest version of flutter then lable text and hint text shown like this
-          // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(Icons.email_outlined)),
     );
@@ -110,8 +116,6 @@ class _AccountDetailState extends State<AccountDetail> {
       decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Re-enter your password",
-          // If  you are using latest version of flutter then lable text and hint text shown like this
-          // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(Icons.lock_outline)),
     );
@@ -122,8 +126,26 @@ class _AccountDetailState extends State<AccountDetail> {
       decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Enter your password",
-          // If  you are using latest version of flutter then lable text and hint text shown like this
-          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.lock_outline)),
+    );
+  }
+
+  TextFormField fullnameTextFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Enter your fullname",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.info_outline)),
+    );
+  }
+
+  TextFormField addressTextFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Enter your address",
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: Icon(Icons.lock_outline)),
     );
