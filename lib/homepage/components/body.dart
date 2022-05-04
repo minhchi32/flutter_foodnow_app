@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_foodnow_app/homepage/components/fragment/account_detail.dart';
-import 'package:flutter_foodnow_app/homepage/components/fragment/favorite_fragment.dart';
+import 'package:flutter_foodnow_app/homepage/components/fragment/notification_fragment.dart';
 import 'package:flutter_foodnow_app/homepage/components/fragment/home_fragment.dart';
 
 import 'package:flutter_foodnow_app/homepage/components/homeheader.dart';
-import 'package:flutter_foodnow_app/homepage/components/fragment/notification_fragment.dart';
+import 'package:flutter_foodnow_app/homepage/components/fragment/favorite_fragment.dart';
 import 'package:flutter_foodnow_app/models/products.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 
@@ -25,7 +25,7 @@ class _BodyState extends State<Body> {
     List<Widget> screen = [
       HomeDetail(),
       FavoriteDetail(Utilities.data),
-      NotificationDetail(Products.init()),
+      NotificationDetail(),
       AccountDetail()
     ];
 

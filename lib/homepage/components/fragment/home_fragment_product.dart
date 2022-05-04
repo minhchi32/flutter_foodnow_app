@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_foodnow_app/detail/productpage.dart';
 import 'package:flutter_foodnow_app/models/products.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 
@@ -69,9 +70,9 @@ class ProductItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         //print(product.id.toString());
-        Utilities.data.add(product);
-        // Navigator.pushNamed(context, ProductPage.routeName,
-        //     arguments: ProductDetailsArguments(product: product));
+        // Utilities.addFavorite(product);
+        Navigator.pushNamed(context, ProductPage.routeName,
+            arguments: ProductDetailsArguments(product: product));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

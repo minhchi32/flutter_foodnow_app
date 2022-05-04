@@ -8,6 +8,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quiver/strings.dart';
 
+import '../../widgets/widget.dart';
+
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
@@ -80,31 +82,9 @@ class _SignUpFormState extends State<SignUpForm> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/facebook-2.svg"),
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/google-icon.svg"),
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9), shape: BoxShape.circle),
-                    child: SvgPicture.asset("./assets/icons/twitter.svg"),
-                  )
+                  facebookLogin(),
+                  googleLogin(),
+                  twitterLogin(),
                 ],
               ),
             ),

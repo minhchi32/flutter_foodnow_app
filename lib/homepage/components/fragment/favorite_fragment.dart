@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_foodnow_app/models/products.dart';
 
-class NotificationDetail extends StatelessWidget {
+import '../../../detail/productpage.dart';
+
+class FavoriteDetail extends StatelessWidget {
   List<Products> products;
 
-  NotificationDetail(this.products);
+  FavoriteDetail(this.products);
   @override
   Widget build(BuildContext context) {
     print(products.length.toString());
@@ -30,40 +32,45 @@ class ProductItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Row(
-          children: [
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.contain,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ProductPage.routeName,
+            arguments: ProductDetailsArguments(product: product));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 100,
+                height: 100,
+                child: Image.asset(
+                  product.image,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Expanded(
-              child: SizedBox(
-                  height: 100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(product.title),
-                      Expanded(
-                          child: Text(
-                        product.description,
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                      ))
-                    ],
-                  )),
-            )
-          ],
+              SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: SizedBox(
+                    height: 100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(product.title),
+                        Expanded(
+                            child: Text(
+                          product.description,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                        ))
+                      ],
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );

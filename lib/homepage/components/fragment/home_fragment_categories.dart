@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_foodnow_app/category/categorypage.dart';
 import 'package:flutter_foodnow_app/models/categories.dart';
 
 class CategoriesStore extends StatelessWidget {
@@ -38,7 +39,13 @@ class CategoriesStore extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
-                    return CategoriesItem(category: categories[index]);
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, CategoryPage.routeName,
+                              arguments: categories[index].id);
+                        },
+                        child: CategoriesItem(category: categories[index]));
+                    // return CategoriesItem(category: categories[index]);
                   }),
             )
           ],
@@ -59,7 +66,7 @@ class CategoriesItem extends StatelessWidget {
       width: 150,
       height: 150,
       padding: EdgeInsets.all(5),
-      child: Image.asset(category.image),
+      child: Image.asset(category.image.toString()),
     );
   }
 }

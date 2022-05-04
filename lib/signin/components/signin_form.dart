@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../signup/signuppage.dart';
+import '../../widgets/widget.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -140,25 +141,15 @@ class _SignInFormState extends State<SignInForm> {
                           if (prefs.containsKey('username')) {
                             if (prefs.getString('username') != username.text ||
                                 prefs.getString('password') != password.text) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      // "Username: ${prefs.getString('username')} \nPassword: ${prefs.getString('password')}",
-                                      "Username or password incorrect",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Username or password is empty"),
-                              ));
-                              return;
+                              toastNotify("Username or password incorrect");
+                              // toastNotify("Username: ${prefs.getString('username')}\nPassword: ${prefs.getString('password')}",toastGravity: ToastGravity.CENTER);
+                              // return;
+                            } else {
+                              // toastNotify("Username or password is empty");
+                              // return;
                             }
                           } else {
                             if (_value) {
-                              // obtain shared preferences
                               prefs = await SharedPreferences.getInstance();
                               prefs.setString('username', username.text);
                               prefs.setString('password', password.text);
@@ -193,37 +184,9 @@ class _SignInFormState extends State<SignInForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF5F6F9),
-                                shape: BoxShape.circle),
-                            child: SvgPicture.asset(
-                                "./assets/icons/facebook-2.svg"),
-                          ),
-                          Container(
-                            height: 40,
-                            width: 40,
-                            margin: EdgeInsets.only(left: 10, right: 10),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF5F6F9),
-                                shape: BoxShape.circle),
-                            child: SvgPicture.asset(
-                                "./assets/icons/google-icon.svg"),
-                          ),
-                          Container(
-                            height: 40,
-                            width: 40,
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF5F6F9),
-                                shape: BoxShape.circle),
-                            child:
-                                SvgPicture.asset("./assets/icons/twitter.svg"),
-                          )
+                          facebookLogin(),
+                          googleLogin(),
+                          twitterLogin(),
                         ],
                       ),
                     ),
