@@ -45,3 +45,19 @@ Future<bool?> toastNotify(String msg,
       textColor: Colors.white,
       fontSize: 16.0);
 }
+
+TextFormField formField(
+    TextEditingController controller, String hintText, IconData icon,
+    {bool enable = true, bool obscureText = false, TextInputType keyboardType = TextInputType.text}) {
+  return TextFormField(
+      controller: controller,
+      enabled: enable,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: hintText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(icon),
+      ));
+}

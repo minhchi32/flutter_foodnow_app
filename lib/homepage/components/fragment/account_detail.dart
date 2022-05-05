@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../widgets/widget.dart';
 
@@ -12,6 +12,26 @@ class AccountDetail extends StatefulWidget {
 class _AccountDetailState extends State<AccountDetail> {
   var prefs;
   final email = TextEditingController();
+  final password = TextEditingController();
+  final fullname = TextEditingController();
+  final address = TextEditingController();
+  final phone = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  _getData() async {
+    prefs = await SharedPreferences.getInstance();
+    email.text = prefs.getString('username');
+    password.text = prefs.getString('password');
+    fullname.text = prefs.getString('fullname');
+    address.text = prefs.getString('address');
+    phone.text = prefs.getString('phone');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -26,23 +46,26 @@ class _AccountDetailState extends State<AccountDetail> {
                   SizedBox(
                     height: 30,
                   ),
-                  emailTextFormField(),
+                  formField(email, "Enter your email", Icons.email_outlined,
+                      enable: false),
                   SizedBox(
                     height: 30,
                   ),
-                  passwordTextFormField(),
+                  formField(password, "Enter your password", Icons.lock_outline,
+                      enable: false, obscureText: true),
                   SizedBox(
                     height: 30,
                   ),
-                  fullnameTextFormField(),
+                  formField(
+                      fullname, "Enter your fullname", Icons.info_outline),
                   SizedBox(
                     height: 30,
                   ),
-                  addressTextFormField(),
+                  formField(address, "Enter your address", Icons.lock_outline),
                   SizedBox(
                     height: 30,
                   ),
-                  phoneNumberTextFormField(),
+                  formField(phone, "Enter your phone number", Icons.phone, keyboardType: TextInputType.number),
                   SizedBox(
                     height: 30,
                   ),
@@ -50,14 +73,24 @@ class _AccountDetailState extends State<AccountDetail> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        prefs = await SharedPreferences.getInstance();
+                        prefs.setString('fullname', fullname.text);
+                        prefs.setString('address', address.text);
+                        prefs.setString('phone', phone.text);
+                        toastNotify("Update info account successfully");
+                        // final result = await Navigator.pushNamed(context, HomePage.routeName);
+                      },
                       style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(color: Colors.green)))),
-                      child: Text(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.green),
+                          ),
+                        ),
+                      ),
+                      child: const Text(
                         "Save",
                         style: TextStyle(
                             fontSize: 18,
@@ -87,68 +120,5 @@ class _AccountDetailState extends State<AccountDetail> {
         ],
       ),
     ));
-  }
-
-  TextFormField emailTextFormField() {
-    return TextFormField(
-      controller: email,
-      enabled: false,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Enter your email ",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.email_outlined)),
-    );
-  }
-
-  TextFormField conformTextFormField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Re-enter your password",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.lock_outline)),
-    );
-  }
-
-  TextFormField passwordTextFormField() {
-    return TextFormField(
-      enabled: false,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Enter your password",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.lock_outline)),
-    );
-  }
-
-  TextFormField fullnameTextFormField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Enter your fullname",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.info_outline)),
-    );
-  }
-
-  TextFormField addressTextFormField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Enter your address",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.lock_outline)),
-    );
-  }
-
-  TextFormField phoneNumberTextFormField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: "Enter your phone number",
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.phone)),
-    );
   }
 }
