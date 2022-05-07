@@ -6,7 +6,6 @@ import 'package:flutter_foodnow_app/homepage/components/fragment/home_fragment.d
 
 import 'package:flutter_foodnow_app/homepage/components/homeheader.dart';
 import 'package:flutter_foodnow_app/homepage/components/fragment/favorite_fragment.dart';
-import 'package:flutter_foodnow_app/models/products.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 
 import 'menuheader.dart';
@@ -32,6 +31,8 @@ class _BodyState extends State<Body> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: flag ? Colors.transparent : Colors.green,
+        elevation: 0,
         automaticallyImplyLeading: false,
         title: flag ? HomeHeader() : MenuHeader(),
       ),

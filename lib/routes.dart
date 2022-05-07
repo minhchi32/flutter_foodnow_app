@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_foodnow_app/cart/cartpage.dart';
 import 'package:flutter_foodnow_app/category/categorypage.dart';
 import 'package:flutter_foodnow_app/detail/productpage.dart';
 import 'package:flutter_foodnow_app/splashpage.dart';
@@ -14,4 +15,5 @@ final Map<String, WidgetBuilder> routes = {
   HomePage.routeName: ((context) => HomePage()),
   CategoryPage.routeName: (context) => CategoryPage(),
   ProductPage.routeName: (context) => ProductPage(),
+  CartPage.routeName: (context) => CartPage(),
 };

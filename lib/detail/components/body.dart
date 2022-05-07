@@ -6,14 +6,21 @@ import 'package:flutter_foodnow_app/models/products.dart';
 import '../../models/utilities.dart';
 import '../../widgets/numeric_step_button.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   Products product;
-  int countOrder = 0;
+
   Body({required this.product});
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int countOrder = 1;
+
+  @override
   Widget build(BuildContext context) {
-    Utilities.addFavorite(product);
+    Utilities.addFavorite(widget.product);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -23,27 +30,25 @@ class Body extends StatelessWidget {
           SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 200,
-              child: Image.asset(product.image)),
+              child: Image.asset(widget.product.image)),
           SizedBox(
             height: 20,
           ),
           Expanded(
-            child: Text("Description: ${product.description}"),
+            child: Text("Description: ${widget.product.description}"),
             flex: 1,
           ),
           Row(
             children: [
-              Text("Price: ${product.price}"),
+              Text("Price: ${widget.product.price}"),
               NumericStepButton(
-                maxValue: 20,
-                onChanged: (value) {
-                  countOrder = value;
-                },
+                onChanged: (value) => setState(() => countOrder = value),
               ),
             ],
           ),
           AddProductToCart(
-            product: product,
+            product: widget.product,
+            countOrder: countOrder,
           )
         ],
       ),

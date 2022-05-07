@@ -22,16 +22,19 @@ class _CategoryDetailState extends State<CategoryDetail> {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading:
-                data[index].id != null ? Image.asset(data[index].image) : null,
-            title: Text(data[index].title.toString()),
-            trailing: Text(data[index].price.toString()),
-            onTap: () {
-              
-              Navigator.pushNamed(context, ProductPage.routeName,
-                  arguments: ProductDetailsArguments(product: data[index]));
-            },
+          return Container(
+            color: Color(0xFFF5F5F5),
+            padding: EdgeInsets.all(16),
+            child: Row(children: [
+              SizedBox(
+                  width: 50, height: 50, child: Image.asset(data[index].image)),
+              Expanded(child: Text(data[index].title)),
+              Expanded(
+                  child: Text(
+                data[index].price.toString(),
+                textAlign: TextAlign.end,
+              )),
+            ]),
           );
         });
   }
