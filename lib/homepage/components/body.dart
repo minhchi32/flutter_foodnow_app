@@ -6,6 +6,7 @@ import 'package:flutter_foodnow_app/homepage/components/fragment/home_fragment.d
 
 import 'package:flutter_foodnow_app/homepage/components/homeheader.dart';
 import 'package:flutter_foodnow_app/homepage/components/fragment/favorite_fragment.dart';
+import 'package:flutter_foodnow_app/models/orders.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 
 import 'menuheader.dart';
@@ -24,7 +25,7 @@ class _BodyState extends State<Body> {
     List<Widget> screen = [
       HomeDetail(),
       FavoriteDetail(Utilities.data),
-      NotificationDetail(),
+      NotificationDetail(Orders.orders),
       AccountDetail()
     ];
 

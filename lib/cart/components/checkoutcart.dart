@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_foodnow_app/cart/components/body.dart';
 import 'package:flutter_foodnow_app/homepage/homepage.dart';
+import 'package:flutter_foodnow_app/models/carts.dart';
+import 'package:flutter_foodnow_app/models/orders.dart';
 import 'package:flutter_foodnow_app/models/utilities.dart';
 
 import '../../homepage/components/fragment/notification_fragment.dart';
 
 class CheckOutCart extends StatelessWidget {
   double sum;
+  List<CartItem> cartDetails = Carts().getCart();
   CheckOutCart({required this.sum});
 
   @override
@@ -41,7 +45,10 @@ class CheckOutCart extends StatelessWidget {
             height: 50,
             child: TextButton(
               onPressed: () {
-                // Utilities.carts.add(cart);
+                Orders order = Orders(cartDetails, sum);
+                print(order.cart[0].countOrder);
+                Orders.checkOutCart(order);
+                cartDetails.clear();
                 Navigator.pushNamed(context, HomePage.routeName);
               },
               child: Text(
