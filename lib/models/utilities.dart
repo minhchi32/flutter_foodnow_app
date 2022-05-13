@@ -62,4 +62,8 @@ class Utilities {
       return;
     data.add(product);
   }
+
+  List<Products> find(String name) {
+    return Products.init().where((element) => element.title.toLowerCase().contains(name.toLowerCase())).toList();
+  }
 }

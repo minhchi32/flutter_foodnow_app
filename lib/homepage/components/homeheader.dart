@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_foodnow_app/cart/cartpage.dart';
+import 'package:flutter_foodnow_app/widgets/widget.dart';
+
+import '../../models/carts.dart';
+import '../../search/searchpage.dart';
 
 class HomeHeader extends StatelessWidget {
   @override
@@ -9,6 +13,7 @@ class HomeHeader extends StatelessWidget {
       children: [
         Expanded(
           child: TextField(
+            onTap: () => Navigator.pushNamed(context, SearchPage.routeName),
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.all(5),
@@ -20,6 +25,10 @@ class HomeHeader extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            if (Carts().getCart().isEmpty) {
+              toastNotify("Cart is empty");
+              return;
+            }
             Navigator.pushNamed(context, CartPage.routeName);
           },
           child: Container(
